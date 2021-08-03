@@ -21,16 +21,16 @@ const { setupSysinfoVariant } = require('./lib/commands');
 		chalk.whiteBright.bold('A very usefull utility tool for developers')
 	);
 
-	const res = await setupSysinfoVariant();
-
 	const {
-		answer: { sysvariant },
+		answer,
 		data: { infoStandard, infoExtended }
-	} = res;
+	} = await setupSysinfoVariant();
 
-	if (sysvariant === 'standard') {
-		console.log(infoStandard);
+	if (answer.sysvariant === 'standard') {
+		console.log(`You clicked ${answer.sysvariant}`);
 	} else {
-		console.log(infoExtended);
+		console.log(`You clicked ${answer.sysvariant}`);
 	}
+
+	// console.log(answer);
 })();
