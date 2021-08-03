@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 const chalk = require('chalk');
 const figlet = require('figlet');
 const clear = require('clear');
 
-const { setupSysinfoVariant } = require('./lib/commands');
+const { setupSysInfo } = require('./lib/commands');
 
 (async () => {
 	clear();
@@ -20,17 +21,11 @@ const { setupSysinfoVariant } = require('./lib/commands');
 	console.log(
 		chalk.whiteBright.bold('A very usefull utility tool for developers')
 	);
-
-	const {
-		answer,
-		data: { infoStandard, infoExtended }
-	} = await setupSysinfoVariant();
+	const { answer, data } = await setupSysInfo();
 
 	if (answer.sysvariant === 'standard') {
-		console.log(`You clicked ${answer.sysvariant}`);
+		console.log(data.infoStandard);
 	} else {
-		console.log(`You clicked ${answer.sysvariant}`);
+		console.log(data.infoExtended);
 	}
-
-	// console.log(answer);
 })();
