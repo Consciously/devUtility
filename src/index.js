@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 const clear = require('clear');
 
-const { setupSysInfo } = require('./lib/commands');
+const { setupSysInfo } = require('./controller/commands');
 
 (async () => {
 	clear();

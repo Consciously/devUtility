@@ -1,7 +1,6 @@
 const chalk = require('chalk');
-const filesize = require('filesize');
 const Table = require('cli-table3');
-const sysinfo = require('./systeminformation');
+const sysinfo = require('../models/systeminformation');
 const fileSize = require('filesize');
 
 const table = new Table({
@@ -114,9 +113,9 @@ const systemInfoViews = async () => {
 
 		tableMemoryStnd.push(
 			[`${chalk.blueBright.bold('Memory Info')}`, '', ''],
-			['', 'Total', `${filesize(memStd.total)}`],
-			['', 'Used', `${filesize(memStd.used)}`],
-			['', 'Free', `${filesize(memStd.free)}`]
+			['', 'Total', `${fileSize(memStd.total)}`],
+			['', 'Used', `${fileSize(memStd.used)}`],
+			['', 'Free', `${fileSize(memStd.free)}`]
 		);
 
 		tableOSStnd.push(

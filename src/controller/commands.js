@@ -1,6 +1,6 @@
-const { askSysInfoVariant } = require('./inquirer');
+const { askSysInfoVariant } = require('../lib/inquirer');
 const program = require('commander');
-const { systemInfoViews } = require('./views');
+const { systemInfoViews } = require('../views/sysInfoViews');
 
 program
 	.version('1.0.0')
