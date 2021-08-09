@@ -21,11 +21,53 @@ const { setupSysInfo } = require('./lib/commands');
 	console.log(
 		chalk.whiteBright.bold('A very usefull utility tool for developers')
 	);
-	const { answer, data } = await setupSysInfo();
+	const {
+		answer,
+		dataStandard: {
+			tableStd,
+			tableCPUStd,
+			tableSystemStd,
+			tableMemoryStd,
+			tableOSStd,
+			tableDiskStd,
+			tableNetworkStd
+		},
+		dataExtended: {
+			tableExt,
+			tableCpuExt,
+			tableSystemExt,
+			tableBiosExt,
+			tableMotherboardExt,
+			tableMemoryExt,
+			tableMemoryLayoutExt,
+			tableOSExt,
+			tableVersionsExt,
+			tableDiskExt,
+			tableFSExt,
+			tableNetworkExt
+		}
+	} = await setupSysInfo();
 
 	if (answer.sysvariant === 'standard') {
-		console.log(data.infoStandard);
+		console.log(tableStd.toString());
+		console.log(tableCPUStd.toString());
+		console.log(tableSystemStd.toString());
+		console.log(tableMemoryStd.toString());
+		console.log(tableOSStd.toString());
+		console.log(tableDiskStd.toString());
+		console.log(tableNetworkStd.toString());
 	} else {
-		console.log(data.infoExtended);
+		console.log(tableExt.toString());
+		console.log(tableCpuExt.toString());
+		console.log(tableSystemExt.toString());
+		console.log(tableBiosExt.toString());
+		console.log(tableMotherboardExt.toString());
+		console.log(tableMemoryExt.toString());
+		console.log(tableMemoryLayoutExt.toString());
+		console.log(tableOSExt.toString());
+		console.log(tableVersionsExt.toString());
+		console.log(tableDiskExt.toString());
+		console.log(tableFSExt.toString());
+		console.log(tableNetworkExt.toString());
 	}
 })();
