@@ -2,28 +2,66 @@
 const chalk = require('chalk');
 const figlet = require('figlet');
 const clear = require('clear');
+const log = console.log;
 
-const { setupSysInfo } = require('./controller/commands');
+const { setupSysInfo, setupCreateProject } = require('./controller/commands');
 
-(async () => {
-	clear();
-
-	console.log(
-		chalk.whiteBright.bold.bgBlackBright(
+const intro = () => {
+	return {
+		headline: chalk.whiteBright.bold.bgBlackBright(
 			figlet.textSync('DevUtility', {
 				font: 'Small Slant',
 				horizontalLayout: 'fitted',
 				width: 150
 			})
+		),
+		tagline: chalk.whiteBright.bold(
+			'A very usefull utility tool for developers'
 		)
-	);
+	};
+};
 
-	console.log(
-		chalk.whiteBright.bold('A very usefull utility tool for developers')
-	);
-	const {
-		answer,
-		dataStandard: {
+const getCreateProject = async () => {
+	const { answerCreateProjectdOrPrintSysinfo } = await setupCreateProject();
+
+	return {
+		answerCreateProjectdOrPrintSysinfo
+	};
+};
+
+const getSysinfo = async () => {
+	const { answerSysinfo, dataStandard, dataExtended } = await setupSysInfo();
+
+	return {
+		answerSysinfo,
+		dataStandard,
+		dataExtended
+	};
+};
+
+const init = async () => {
+	clear();
+	intro();
+
+	console.log(intro().headline);
+	console.log(intro().tagline);
+
+	const project = await getCreateProject();
+
+	const { projectOrSysinfo } = project.answerCreateProjectdOrPrintSysinfo;
+
+	if (projectOrSysinfo === 'Create Project') {
+		console.log('You want a new project');
+	} else {
+		const sysinfo = await getSysinfo();
+
+		const {
+			answerSysinfo: { sysvariant },
+			dataStandard,
+			dataExtended
+		} = sysinfo;
+
+		const {
 			tableStd,
 			tableCPUStd,
 			tableSystemStd,
@@ -31,8 +69,9 @@ const { setupSysInfo } = require('./controller/commands');
 			tableOSStd,
 			tableDiskStd,
 			tableNetworkStd
-		},
-		dataExtended: {
+		} = dataStandard;
+
+		const {
 			tableExt,
 			tableCpuExt,
 			tableSystemExt,
@@ -45,29 +84,30 @@ const { setupSysInfo } = require('./controller/commands');
 			tableDiskExt,
 			tableFSExt,
 			tableNetworkExt
+		} = dataExtended;
+		if (sysvariant === 'Standard') {
+			log(tableStd.toString()),
+				log(tableCPUStd.toString()),
+				log(tableSystemStd.toString()),
+				log(tableMemoryStd.toString()),
+				log(tableOSStd.toString()),
+				log(tableDiskStd.toString()),
+				log(tableNetworkStd.toString());
+		} else {
+			log(tableExt.toString()),
+				log(tableCpuExt.toString()),
+				log(tableSystemExt.toString()),
+				log(tableBiosExt.toString()),
+				log(tableMotherboardExt.toString()),
+				log(tableMemoryExt.toString()),
+				log(tableMemoryLayoutExt.toString()),
+				log(tableOSExt.toString()),
+				log(tableVersionsExt.toString()),
+				log(tableDiskExt.toString()),
+				log(tableFSExt.toString()),
+				log(tableNetworkExt.toString());
 		}
-	} = await setupSysInfo();
-
-	if (answer.sysvariant === 'standard') {
-		console.log(tableStd.toString());
-		console.log(tableCPUStd.toString());
-		console.log(tableSystemStd.toString());
-		console.log(tableMemoryStd.toString());
-		console.log(tableOSStd.toString());
-		console.log(tableDiskStd.toString());
-		console.log(tableNetworkStd.toString());
-	} else {
-		console.log(tableExt.toString());
-		console.log(tableCpuExt.toString());
-		console.log(tableSystemExt.toString());
-		console.log(tableBiosExt.toString());
-		console.log(tableMotherboardExt.toString());
-		console.log(tableMemoryExt.toString());
-		console.log(tableMemoryLayoutExt.toString());
-		console.log(tableOSExt.toString());
-		console.log(tableVersionsExt.toString());
-		console.log(tableDiskExt.toString());
-		console.log(tableFSExt.toString());
-		console.log(tableNetworkExt.toString());
 	}
-})();
+};
+
+init();
