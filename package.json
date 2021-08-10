@@ -2,22 +2,25 @@
 	"name": "devutility-cli",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "index.mjs",
+	"type": "module",
 	"preferGlobal": true,
-	"bin": "./src/index.js",
+	"bin": "./src/index.mjs",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node ./src/index.js"
+		"start": "node ./src/index.mjs"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@octokit/auth-token": "^2.4.5",
 		"chalk": "^4.1.1",
 		"clear": "^0.1.0",
 		"cli-table3": "^0.6.0",
 		"clui": "^0.3.6",
 		"commander": "^8.0.0",
+		"configstore": "^6.0.0",
 		"figlet": "^1.5.0",
 		"filesize": "^7.0.0",
 		"inquirer": "^8.1.2",

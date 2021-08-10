@@ -1,7 +1,7 @@
-const chalk = require('chalk');
-const Table = require('cli-table3');
-const sysinfo = require('../models/systeminformation');
-const fileSize = require('filesize');
+import chalk from 'chalk';
+import Table from 'cli-table3';
+import { printSysInfo } from '../models/systeminformation.mjs';
+import fileSize from 'filesize';
 
 const table = new Table({
 	head: ['Categories', 'Subcategories', 'Values'],
@@ -77,7 +77,7 @@ const tableNetworkExt = new Table({
 });
 
 const systemInfoViews = async () => {
-	const data = await sysinfo.printSysInfo();
+	const data = await printSysInfo();
 
 	const dataStandard = Object.fromEntries(Object.entries(data.dataStandard));
 	const dataExtended = Object.fromEntries(Object.entries(data.dataExtended));
@@ -334,7 +334,4 @@ const systemInfoViews = async () => {
 	return { printDataStandard, printDataExtended };
 };
 
-systemInfoViews();
-module.exports = {
-	systemInfoViews
-};
+export { systemInfoViews };

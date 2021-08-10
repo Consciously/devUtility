@@ -1,4 +1,4 @@
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
 
 const askSysInfoVariant = async () => {
 	const questionSysinfo = [
@@ -15,6 +15,4 @@ const askSysInfoVariant = async () => {
 	return answerSysinfo;
 };
 
-module.exports = {
-	askSysInfoVariant
-};
+export { askSysInfoVariant };

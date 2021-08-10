@@ -1,4 +1,4 @@
-const si = require('systeminformation');
+import si from 'systeminformation';
 
 const printSysInfo = async () => {
 	const standardSystemView = {
@@ -43,6 +43,4 @@ const printSysInfo = async () => {
 	}
 };
 
-module.exports = {
-	printSysInfo
-};
+export { printSysInfo };

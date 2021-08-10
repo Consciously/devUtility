@@ -1,4 +1,4 @@
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
 
 const askCreateProjectOrPrintSysinfo = async () => {
 	const questionProject = [
@@ -15,6 +15,4 @@ const askCreateProjectOrPrintSysinfo = async () => {
 	return answerProject;
 };
 
-module.exports = {
-	askCreateProjectOrPrintSysinfo
-};
+export { askCreateProjectOrPrintSysinfo };
