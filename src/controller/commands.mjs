@@ -1,19 +1,23 @@
 import { askSysInfoVariant } from '../lib/inquirerSysinfo.mjs';
-import { askCreateProjectOrPrintSysinfo } from '../lib/inquirerProject.mjs';
+import { askChooseProjectOrPrintSysinfo } from '../lib/inquirerChooseProjectOrSysinfo.mjs';
 import { askGetGithhubToken } from '../lib/inquirerAuthToken.mjs';
 // const program = require('commander');
 import { systemInfoViews } from '../views/sysInfoViews.mjs';
+import { useConfigstore } from '../lib/configstore.mjs';
 
 // program
 // 	.version('1.0.0')
 // 	.alias('v')
 // 	.description('A very usefull utility tool for developers');
 
-export const setupConfigstore = answerGithubToken => {};
+export const setupConfigstore = githubToken => {
+	useConfigstore(githubToken);
+
+	return githubToken;
+};
 
 export const setupGithubAuthToken = async () => {
 	const answerGithubToken = await askGetGithhubToken();
-	console.log(answerGithubToken);
 	setupConfigstore(answerGithubToken);
 
 	return {
@@ -21,12 +25,12 @@ export const setupGithubAuthToken = async () => {
 	};
 };
 
-export const setupCreateProject = async () => {
-	const answerCreateProjectdOrPrintSysinfo =
-		await askCreateProjectOrPrintSysinfo();
+export const setupChooseProjectOrSysinfo = async () => {
+	const answerChooseProjectdOrPrintSysinfo =
+		await askChooseProjectOrPrintSysinfo();
 
 	return {
-		answerCreateProjectdOrPrintSysinfo
+		answerChooseProjectdOrPrintSysinfo
 	};
 };
 
@@ -45,5 +49,3 @@ export const setupSysInfo = async () => {
 };
 
 // setupSysInfo();
-
-// export { setupSysInfo, setupCreateProject, setupGithubAuthToken };

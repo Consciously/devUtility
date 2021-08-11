@@ -5,10 +5,12 @@ import clear from 'clear';
 const log = console.log;
 
 import {
-	setupCreateProject,
+	setupChooseProjectOrSysinfo,
 	setupSysInfo,
 	setupGithubAuthToken
 } from './controller/commands.mjs';
+
+import { useConfigstore } from './lib/configstore.mjs';
 
 const intro = () => {
 	return {
@@ -33,11 +35,12 @@ const getGithubToken = async () => {
 	};
 };
 
-const getCreateProject = async () => {
-	const { answerCreateProjectdOrPrintSysinfo } = await setupCreateProject();
+const getChooseProjectOrSysinfo = async () => {
+	const { answerChooseProjectdOrPrintSysinfo } =
+		await setupChooseProjectOrSysinfo();
 
 	return {
-		answerCreateProjectdOrPrintSysinfo
+		answerChooseProjectdOrPrintSysinfo
 	};
 };
 
@@ -58,68 +61,68 @@ const init = async () => {
 	console.log(intro().headline);
 	console.log(intro().tagline);
 
-	const {
-		answerGithubToken: { githubToken }
-	} = await getGithubToken();
+	const project = await getChooseProjectOrSysinfo();
+	const { projectOrSysinfo } = project.answerChooseProjectdOrPrintSysinfo;
+	if (projectOrSysinfo === 'Create Project') {
+		const token = useConfigstore();
 
-	if (githubToken) {
-		// console.log(answerGithubToken.githubToken);
-		const project = await getCreateProject();
-		const { projectOrSysinfo } = project.answerCreateProjectdOrPrintSysinfo;
-		if (projectOrSysinfo === 'Create Project') {
+		if (token) {
 			console.log('You want a new project');
 		} else {
-			const sysinfo = await getSysinfo();
-			const {
-				answerSysinfo: { sysvariant },
-				dataStandard,
-				dataExtended
-			} = sysinfo;
-			const {
-				tableStd,
-				tableCPUStd,
-				tableSystemStd,
-				tableMemoryStd,
-				tableOSStd,
-				tableDiskStd,
-				tableNetworkStd
-			} = dataStandard;
-			const {
-				tableExt,
-				tableCpuExt,
-				tableSystemExt,
-				tableBiosExt,
-				tableMotherboardExt,
-				tableMemoryExt,
-				tableMemoryLayoutExt,
-				tableOSExt,
-				tableVersionsExt,
-				tableDiskExt,
-				tableFSExt,
-				tableNetworkExt
-			} = dataExtended;
-			if (sysvariant === 'Standard') {
-				log(tableStd.toString()),
-					log(tableCPUStd.toString()),
-					log(tableSystemStd.toString()),
-					log(tableMemoryStd.toString()),
-					log(tableOSStd.toString()),
-					log(tableDiskStd.toString()),
-					log(tableNetworkStd.toString());
-			} else {
-				log(tableExt.toString()),
-					log(tableCpuExt.toString()),
-					log(tableSystemExt.toString()),
-					log(tableBiosExt.toString()),
-					log(tableMotherboardExt.toString()),
-					log(tableMemoryExt.toString()),
-					log(tableMemoryLayoutExt.toString()),
-					log(tableOSExt.toString()),
-					log(tableVersionsExt.toString()),
-					log(tableDiskExt.toString()),
-					log(tableFSExt.toString()),
-					log(tableNetworkExt.toString());
-			}
+			const { answerGithubToken } = await getGithubToken();
+			useConfigstore(answerGithubToken.githubToken);
+		}
+	} else {
+		const sysinfo = await getSysinfo();
+		const {
+			answerSysinfo: { sysvariant },
+			dataStandard,
+			dataExtended
+		} = sysinfo;
+		const {
+			tableStd,
+			tableCPUStd,
+			tableSystemStd,
+			tableMemoryStd,
+			tableOSStd,
+			tableDiskStd,
+			tableNetworkStd
+		} = dataStandard;
+		const {
+			tableExt,
+			tableCpuExt,
+			tableSystemExt,
+			tableBiosExt,
+			tableMotherboardExt,
+			tableMemoryExt,
+			tableMemoryLayoutExt,
+			tableOSExt,
+			tableVersionsExt,
+			tableDiskExt,
+			tableFSExt,
+			tableNetworkExt
+		} = dataExtended;
+		if (sysvariant === 'Standard') {
+			log(tableStd.toString()),
+				log(tableCPUStd.toString()),
+				log(tableSystemStd.toString()),
+				log(tableMemoryStd.toString()),
+				log(tableOSStd.toString()),
+				log(tableDiskStd.toString()),
+				log(tableNetworkStd.toString());
+		} else {
+			log(tableExt.toString()),
+				log(tableCpuExt.toString()),
+				log(tableSystemExt.toString()),
+				log(tableBiosExt.toString()),
+				log(tableMotherboardExt.toString()),
+				log(tableMemoryExt.toString()),
+				log(tableMemoryLayoutExt.toString()),
+				log(tableOSExt.toString()),
+				log(tableVersionsExt.toString()),
+				log(tableDiskExt.toString()),
+				log(tableFSExt.toString()),
+				log(tableNetworkExt.toString());
 		}
 	}
 };

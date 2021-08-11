@@ -1,10 +1,15 @@
 import Configstore from 'configstore';
 import { readFileSync } from 'fs';
 
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+export const useConfigstore = answerGithubToken => {
+	const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+	const config = new Configstore(pkg);
 
-const config = new Configstore(pkg);
-
-config.set('awesome', true);
-
-console.log(config.get('awesome'));
+	let githubToken = '';
+	if (config.has('githubToken')) {
+		githubToken = config.get('githubToken');
+		return githubToken;
+	} else {
+		config.set('githubToken', answerGithubToken);
+	}
+};
