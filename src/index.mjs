@@ -7,7 +7,8 @@ const log = console.log;
 import {
 	setupChooseProjectOrSysinfo,
 	setupSysInfo,
-	setupGithubAuthToken
+	setupGithubAuthToken,
+	setupGithubRest
 } from './controller/commands.mjs';
 
 import { useConfigstore } from './lib/configstore.mjs';
@@ -61,13 +62,20 @@ const init = async () => {
 	console.log(intro().headline);
 	console.log(intro().tagline);
 
-	const project = await getChooseProjectOrSysinfo();
-	const { projectOrSysinfo } = project.answerChooseProjectdOrPrintSysinfo;
+	const choose = await getChooseProjectOrSysinfo();
+	const { projectOrSysinfo } = choose.answerChooseProjectdOrPrintSysinfo;
 	if (projectOrSysinfo === 'Create Project') {
 		const token = useConfigstore();
 
 		if (token) {
-			console.log('You want a new project');
+			const { login, name, html_url, location } = await setupGithubRest(
+				token.githubToken
+			);
+
+			console.log('Login Name:', login);
+			console.log('Name:', name);
+			console.log('URL:', html_url);
+			console.log('Location:', location);
 		} else {
 			const { answerGithubToken } = await getGithubToken();
 			useConfigstore(answerGithubToken.githubToken);

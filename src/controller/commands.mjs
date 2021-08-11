@@ -4,11 +4,18 @@ import { askGetGithhubToken } from '../lib/inquirerAuthToken.mjs';
 // const program = require('commander');
 import { systemInfoViews } from '../views/sysInfoViews.mjs';
 import { useConfigstore } from '../lib/configstore.mjs';
+import { handleGithubAuthentication } from '../lib/github.mjs';
 
 // program
 // 	.version('1.0.0')
 // 	.alias('v')
 // 	.description('A very usefull utility tool for developers');
+
+export const setupGithubRest = async githubToken => {
+	const github = await handleGithubAuthentication(githubToken);
+
+	return github;
+};
 
 export const setupConfigstore = githubToken => {
 	useConfigstore(githubToken);
