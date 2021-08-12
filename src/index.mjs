@@ -11,7 +11,7 @@ import {
 	setupGithubRest
 } from './controller/commands.mjs';
 
-import { useConfigstore } from './config/configstore.mjs';
+import { useConfigstore } from './config/configstoreToken/configstore.mjs';
 
 const intro = () => {
 	return {

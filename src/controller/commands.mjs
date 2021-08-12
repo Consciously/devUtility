@@ -3,8 +3,8 @@ import { askChooseProjectOrPrintSysinfo } from '../lib/inquirerChooseProjectOrSy
 import { askGetGithhubToken } from '../lib/inquirerAuthToken.mjs';
 // const program = require('commander');
 import { systemInfoViews } from '../views/sysInfoViews.mjs';
-import { useConfigstore } from '../config/configstore.mjs';
-import { handleGithubAuthentication } from '../config/github.mjs';
+import { useConfigstore } from '../config/configstoreToken/configstore.mjs';
+import { handleGithubAuthentication } from '../config/github/github.mjs';
 
 // program
 // 	.version('1.0.0')
